@@ -32,9 +32,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         }}
       >
         <div className="d-flex justify-content-between align-items-center px-4 mb-4">
-          <span className="fw-bold text-uppercase small text-secondary">
-            ✦ Menu Lateral
-          </span>
           <button className="btn-close d-md-none" type="button" onClick={onClose}></button>
         </div>
 

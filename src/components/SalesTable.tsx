@@ -1,14 +1,28 @@
 import React, { useState } from "react";
 import { type Sale } from "../interfaces/Sale";
+import { useNavigate } from "react-router-dom";
 
 interface SalesTableProps {
   sales: Sale[];
+  onDelete: (saleId: number | string) => void;
+  page: number;
+  setPage: (p: number) => void;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
 }
 
-const SalesTable: React.FC<SalesTableProps> = ({ sales }) => {
+const SalesTable: React.FC<SalesTableProps> = ({
+  sales = [],
+  onDelete,
+  page,
+  setPage,
+  hasNextPage,
+  hasPreviousPage,
+}) => {
   const [expandedSaleId, setExpandedSaleId] = useState<string | number | null>(
     null
   );
+  const navigate = useNavigate();
 
   const toggleExpand = (id: string | number) => {
     setExpandedSaleId(expandedSaleId === id ? null : id);
@@ -51,13 +65,12 @@ const SalesTable: React.FC<SalesTableProps> = ({ sales }) => {
 
               return (
                 <React.Fragment key={id}>
-                  {/* Linha Principal */}
                   <tr>
                     <td className="text-muted py-3">{sale.invoice_number}</td>
                     <td className="fw-medium text-dark">
-                      {sale.customer_details.name}
+                      {sale.customer_details?.name}
                     </td>
-                    <td>{sale.seller_details.name}</td>
+                    <td>{sale.seller_details?.name}</td>
                     <td>
                       {sale.created_at
                         ? new Date(sale.created_at)
@@ -85,16 +98,21 @@ const SalesTable: React.FC<SalesTableProps> = ({ sales }) => {
                       >
                         {isExpanded ? "Fechar" : "Ver itens"}
                       </button>
-                      <button className="btn btn-link p-0 mx-2 text-dark border-0 fs-5">
+                      <button
+                        onClick={() => navigate(`/vendas/editar/${sale.id}`)}
+                        className="btn btn-link p-0 mx-2 text-dark border-0 fs-5"
+                      >
                         <i className="bi bi-pencil-square text-secondary"></i>
                       </button>
-                      <button className="btn btn-link p-0 text-danger border-0 fs-5">
+                      <button
+                        className="btn btn-link p-0 text-danger border-0 fs-5"
+                        onClick={() => onDelete(id)}
+                      >
                         <i className="bi bi-trash"></i>
                       </button>
                     </td>
                   </tr>
 
-                  {/* Linha Expansível de Detalhes */}
                   {isExpanded && (
                     <tr className="table-light">
                       <td colSpan={6} className="p-3">
@@ -102,7 +120,7 @@ const SalesTable: React.FC<SalesTableProps> = ({ sales }) => {
                           <table className="table table-sm m-0">
                             <thead>
                               <tr className="text-muted small">
-                                <th>Produto/Serviço</th>
+                                <th>Produto</th>
                                 <th>Quantidade</th>
                                 <th>Preço unitário</th>
                                 <th>Total do Produto</th>
@@ -113,7 +131,7 @@ const SalesTable: React.FC<SalesTableProps> = ({ sales }) => {
                             <tbody>
                               {sale.items?.map((item: any, idx: number) => (
                                 <tr key={idx}>
-                                  <td>{item.product_details.description}</td>
+                                  <td>{item.product_details?.description}</td>
                                   <td>{item.quantity}</td>
                                   <td>
                                     R$ {Number(item.unit_price).toFixed(2)}
@@ -132,13 +150,14 @@ const SalesTable: React.FC<SalesTableProps> = ({ sales }) => {
                                 </tr>
                               ))}
                             </tbody>
-
                             <tfoot
                               className="fw-bold"
                               style={{ color: "#0f4c5c" }}
                             >
                               <tr>
-                                <td style={{ color: "#005f73" }}>Total da Venda</td>
+                                <td style={{ color: "#005f73" }}>
+                                  Total da Venda
+                                </td>
                                 <td style={{ color: "#005f73" }}>
                                   {sale.items?.reduce(
                                     (acc, item) => acc + item.quantity,
@@ -173,6 +192,25 @@ const SalesTable: React.FC<SalesTableProps> = ({ sales }) => {
           )}
         </tbody>
       </table>
+
+      {/* Paginação estilizada centralizada */}
+      <div className="d-flex justify-content-center align-items-center mt-4 gap-3">
+        <button
+          className="btn btn-sm btn-outline-secondary px-3"
+          onClick={() => setPage(page - 1)}
+          disabled={!hasPreviousPage}
+        >
+          Anterior
+        </button>
+        <span className="text-muted small fw-semibold">Página {page}</span>
+        <button
+          className="btn btn-sm btn-outline-secondary px-3"
+          onClick={() => setPage(page + 1)}
+          disabled={!hasNextPage}
+        >
+          Próxima
+        </button>
+      </div>
     </div>
   );
 };
