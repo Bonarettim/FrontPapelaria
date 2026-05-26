@@ -19,7 +19,7 @@ const FormularioVenda = () => {
   const [formData, setFormData] = useState({
     seller_id: "",
     customer_id: "",
-    sale_date: new Date().toISOString().slice(0, 16),
+    sale_date: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString().slice(0, 16),
     items: [] as any[],
   });
 
