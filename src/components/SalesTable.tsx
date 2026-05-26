@@ -193,7 +193,6 @@ const SalesTable: React.FC<SalesTableProps> = ({
         </tbody>
       </table>
 
-      {/* Paginação estilizada centralizada */}
       <div className="d-flex justify-content-center align-items-center mt-4 gap-3">
         <button
           className="btn btn-sm btn-outline-secondary px-3"

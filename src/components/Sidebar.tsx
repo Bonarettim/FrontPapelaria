@@ -15,7 +15,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     onClose(); 
   };
 
-  // Funções auxiliares para evitar aquele código gigante dentro da Template String
   const isVendasActive = location.pathname === '/vendas' || location.pathname === '/';
   const isComissoesActive = location.pathname === '/comissoes';
 
