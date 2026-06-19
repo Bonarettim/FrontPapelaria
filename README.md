@@ -6,7 +6,7 @@ Interface desenvolvida para consumir a API de gestão de vendas e comissões, ut
 * **Framework:** React 19
 * **Linguagem:** TypeScript
 * **Estilização:** Bootstrap 5 (com Bootstrap Icons)
-* **Gerenciamento de Estado:** React Native (Context API / Hooks)
+* **Gerenciamento de Estado:** React Context (Context API / Hooks)
 * **Roteamento:** React Router DOM 7
 * **Build Tool:** Vite
 
@@ -31,7 +31,6 @@ Interface desenvolvida para consumir a API de gestão de vendas e comissões, ut
 
 ### Plano de Melhorias (Roadmap):
 - [ ] Refatoração de chamadas de API utilizando uma camada de serviços (Service Layer).
-- [ ] Implementação de testes unitários com Vitest.
 - [ ] Adição de filtros avançados para relatórios de vendas.
 - [ ] Otimização do gerenciamento de estado global com React Query para cache de dados.
 
