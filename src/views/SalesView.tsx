@@ -64,15 +64,7 @@ const SalesView: React.FC = () => {
           Inserir nova Venda
         </button>
       </div>
-
-      <div className="bg-white p-4 rounded shadow-sm border">
-        {loading ? (
-          <div className="text-center my-5">
-            <div className="spinner-border text-primary" />
-          </div>
-        ) : (
-          <>
-          <input
+      <input
           type="text"
           className="form-control mb-3"
           placeholder="Buscar por cliente, vendedor ou produto..."
@@ -82,6 +74,13 @@ const SalesView: React.FC = () => {
             setPage(1);
           }}
         />
+
+      <div className="bg-white p-4 rounded shadow-sm border">
+        {loading ? (
+          <div className="text-center my-5">
+            <div className="spinner-border text-primary" />
+          </div>
+        ) : (
          <SalesTable
             sales={sales}
             onDelete={handleDeleteSale}
@@ -90,7 +89,6 @@ const SalesView: React.FC = () => {
             hasNextPage={hasNextPage}
             hasPreviousPage={hasPreviousPage}
           />
-        </>
         )}
       </div>
 
