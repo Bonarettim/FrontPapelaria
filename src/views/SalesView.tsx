@@ -12,12 +12,13 @@ const SalesView: React.FC = () => {
   const [hasPreviousPage, setHasPreviousPage] = useState(false);
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
   const fetchSales = async () => {
     try {
       setLoading(true);
 
-      const response = await getSales(page);
+      const response = await getSales(page, search);
 
       setSales(response.data.results || []);
 
@@ -33,7 +34,8 @@ const SalesView: React.FC = () => {
 
   useEffect(() => {
     fetchSales();
-  }, [page]);
+  }, [page, search]);
+  
 
   const handleDeleteSale = async (saleId: number | string) => {
     const confirmed = window.confirm("Deseja realmente excluir esta venda?");
@@ -53,6 +55,7 @@ const SalesView: React.FC = () => {
         <h2 className="fs-4 fw-bold" style={{ color: "#0f4c5c" }}>
           Vendas Realizadas
         </h2>
+        
         <button
           className="btn text-white px-4 py-2 fw-semibold shadow-sm"
           style={{ backgroundColor: "#005f73" }}
@@ -68,7 +71,18 @@ const SalesView: React.FC = () => {
             <div className="spinner-border text-primary" />
           </div>
         ) : (
-          <SalesTable
+          <>
+          <input
+          type="text"
+          className="form-control mb-3"
+          placeholder="Buscar por cliente, vendedor ou produto..."
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+        />
+         <SalesTable
             sales={sales}
             onDelete={handleDeleteSale}
             page={page}
@@ -76,6 +90,7 @@ const SalesView: React.FC = () => {
             hasNextPage={hasNextPage}
             hasPreviousPage={hasPreviousPage}
           />
+        </>
         )}
       </div>
 

@@ -128,7 +128,7 @@ describe("SalesView", () => {
     render(<SalesView />);
 
     await waitFor(() => {
-      expect(salesService.getSales).toHaveBeenCalledWith(1);
+      expect(salesService.getSales).toHaveBeenCalledWith(1, "");
     });
   });
 
@@ -251,7 +251,7 @@ describe("SalesView", () => {
     );
 
     await waitFor(() => {
-      expect(salesService.getSales).toHaveBeenCalledWith(2);
+      expect(salesService.getSales).toHaveBeenLastCalledWith(2, "");
     });
   });
 

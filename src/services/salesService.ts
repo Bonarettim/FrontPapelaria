@@ -14,6 +14,11 @@ export const getCustomers = () => api.get('/customers/');
 export const getProducts = () => api.get('/products/');
 
 
-export const getSales = (page: number = 1) => {
-  return api.get(`/sales/?page=${page}`);
+export const getSales = (page: number = 1, search: string = "") => {
+  return api.get("/sales/", {
+    params: {
+      page,
+      search,
+    },
+  });
 };
